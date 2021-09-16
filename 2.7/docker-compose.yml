@@ -1,0 +1,30 @@
+version: '3.5' 
+
+services: 
+    training: 
+      image: training
+      build: https://github.com/docker-hy/ml-kurkkumopo-training.git
+      volumes:
+      - model:/src/model
+      - data:/src/imgs
+      container_name: training
+    
+    backend: 
+      image: backend
+      build: https://github.com/docker-hy/ml-kurkkumopo-backend.git
+      ports:
+      - 5000:5000
+      volumes:
+      - model:/src/model
+      container_name: backend
+    
+    frontend:
+      image: frontend
+      build: https://github.com/docker-hy/ml-kurkkumopo-frontend.git
+      ports:
+      - 3000:3000
+      container_name: frontend
+
+volumes:
+  data:
+  model:
